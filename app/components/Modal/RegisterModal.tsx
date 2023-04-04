@@ -105,7 +105,7 @@ const RegisterModal = () => {
             text-neutral-800
             cursor-pointer
             hover:underline
-            transform
+            
           '>
             login
           </div>
