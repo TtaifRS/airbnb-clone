@@ -19,7 +19,7 @@ model User {
   hashedPassword String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
-  favoriteIDs    String[]  @db.ObjectId
+  favoriteIds    String[]  @db.ObjectId
 
   accounts     Account[]
   listings     Listing[]
@@ -31,7 +31,7 @@ model Account {
   userId            String  @db.ObjectId
   type              String
   provider          String
-  providerAccoundId String
+  providerAccountId String
   refresh_token     String? @db.String
   access_token      String? @db.String
   expires_at        Int?
@@ -42,7 +42,7 @@ model Account {
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccoundId])
+  @@unique([provider, providerAccountId])
 }
 
 model Listing {
@@ -54,7 +54,7 @@ model Listing {
   roomCount     Int
   bathroomCount Int
   guestCount    Int
-  loactionValue String
+  locationValue String
   userId        String   @db.ObjectId
   price         Int
 
@@ -66,13 +66,12 @@ model Listing {
 model Reservation {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   userId     String   @db.ObjectId
-  listingID  String   @db.ObjectId
   listingId  String?  @db.ObjectId
   startDate  DateTime
   endDate    DateTime
   totalPrice Int
   createdAt  DateTime @default(now())
 
-  User    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Listing Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  listing Listing? @relation(fields: [listingId], references: [id], onDelete: Cascade)
 }

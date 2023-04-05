@@ -32,7 +32,7 @@ export default async function getCurrentUser() {
       createdAt: currentUser.createdAt.toISOString(),
       emailVerified: currentUser.emailVerified?.toISOString() || null
     }
-  } catch(error){
+  } catch(error: any){
     return null
   }
 }
