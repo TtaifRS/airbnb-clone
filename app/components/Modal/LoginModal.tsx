@@ -1,7 +1,7 @@
 'use client';
 
 import {signIn} from 'next-auth/react'
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {AiFillGithub} from 'react-icons/ai'
 import {FcGoogle} from 'react-icons/fc'
@@ -62,6 +62,11 @@ const LoginModal = () => {
     })
   }
 
+  const toggleModal = useCallback(()=>{
+    loginModal.onClose()
+    registerModal.onOpen()
+  },[loginModal, registerModal])
+
   const BodyContent = (
     <div className='flex flex-col gap-4'>
       <Heading
@@ -109,15 +114,17 @@ const LoginModal = () => {
       <div className='text-neutral-400 text-center mt-4 font-light'>
         <div className='flex flex-row items-center justify-center gap-2'>
           <div>
-            Already have an account?
+            First time using Airbnb?
           </div>
-          <div className='
-            text-neutral-800
-            cursor-pointer
-            hover:underline
-            
-          '>
-            signup
+          <div 
+            onClick={toggleModal}
+            className='
+              text-neutral-800
+              cursor-pointer
+              hover:underline
+            '
+          >
+            create an account
           </div>
         </div>
       </div>
@@ -128,7 +135,7 @@ const LoginModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={loginModal.isOpen}
-      title='Register'
+      title='Login'
       actionLabel='Continue'
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
